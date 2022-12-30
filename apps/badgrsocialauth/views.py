@@ -13,10 +13,9 @@ from django.core.exceptions import ValidationError, ImproperlyConfigured
 from django.urls import reverse, NoReverseMatch
 from django.http import HttpResponseBadRequest, HttpResponseForbidden, HttpResponse
 from django.views.generic import RedirectView
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework import status
 
 from saml2 import BINDING_HTTP_POST, BINDING_HTTP_REDIRECT
 

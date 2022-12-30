@@ -1,11 +1,11 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from backpack.badge_connect_api import BadgeConnectProfileView, BadgeConnectAssertionListView
 
 urlpatterns = [
-    url(r'^assertions$', BadgeConnectAssertionListView.as_view(), name='bc_api_backpack_assertion_list'),
-    url(r'^profile$', BadgeConnectProfileView.as_view(), name='bc_api_profile'),
+    re_path(r'^assertions$', BadgeConnectAssertionListView.as_view(), name='bc_api_backpack_assertion_list'),
+    re_path(r'^profile$', BadgeConnectProfileView.as_view(), name='bc_api_profile'),
 ]

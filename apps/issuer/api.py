@@ -26,8 +26,8 @@ from issuer.serializers_v1 import (IssuerSerializerV1, BadgeClassSerializerV1,
                                    BadgeInstanceSerializerV1)
 from issuer.serializers_v2 import IssuerSerializerV2, BadgeClassSerializerV2, BadgeInstanceSerializerV2, \
     IssuerAccessTokenSerializerV2
-from apispec_drf.decorators import apispec_get_operation, apispec_put_operation, \
-    apispec_delete_operation, apispec_list_operation, apispec_post_operation
+# from apispec_drf.decorators import apispec_get_operation, apispec_put_operation, \
+#     apispec_delete_operation, apispec_list_operation, apispec_post_operation
 from mainsite.permissions import AuthenticatedWithVerifiedIdentifier, IsServerAdmin
 from mainsite.serializers import CursorPaginatedListSerializer
 from mainsite.models import AccessTokenProxy
@@ -53,17 +53,17 @@ class IssuerList(BaseEntityListView):
     def get_objects(self, request, **kwargs):
         return self.request.user.cached_issuers()
 
-    @apispec_list_operation('Issuer',
-        summary="Get a list of Issuers for authenticated user",
-        tags=["Issuers"],
-    )
+    # @apispec_list_operation('Issuer',
+    #     summary="Get a list of Issuers for authenticated user",
+    #     tags=["Issuers"],
+    # )
     def get(self, request, **kwargs):
         return super(IssuerList, self).get(request, **kwargs)
 
-    @apispec_post_operation('Issuer',
-        summary="Create a new Issuer",
-        tags=["Issuers"],
-    )
+    # @apispec_post_operation('Issuer',
+    #     summary="Create a new Issuer",
+    #     tags=["Issuers"],
+    # )
     def post(self, request, **kwargs):
         return super(IssuerList, self).post(request, **kwargs)
 
@@ -79,24 +79,24 @@ class IssuerDetail(BaseEntityDetailView):
     ]
     valid_scopes = ["rw:issuer", "rw:issuer:*", "rw:serverAdmin"]
 
-    @apispec_get_operation('Issuer',
-        summary="Get a single Issuer",
-        tags=["Issuers"],
-    )
+    # @apispec_get_operation('Issuer',
+    #     summary="Get a single Issuer",
+    #     tags=["Issuers"],
+    # )
     def get(self, request, **kwargs):
         return super(IssuerDetail, self).get(request, **kwargs)
 
-    @apispec_put_operation('Issuer',
-       summary="Update a single Issuer",
-       tags=["Issuers"],
-   )
+#     @apispec_put_operation('Issuer',
+#        summary="Update a single Issuer",
+#        tags=["Issuers"],
+#    )
     def put(self, request, **kwargs):
         return super(IssuerDetail, self).put(request, **kwargs)
 
-    @apispec_delete_operation('Issuer',
-        summary="Delete a single Issuer",
-        tags=["Issuers"],
-    )
+    # @apispec_delete_operation('Issuer',
+    #     summary="Delete a single Issuer",
+    #     tags=["Issuers"],
+    # )
     def delete(self, request, **kwargs):
         return super(IssuerDetail, self).delete(request, **kwargs)
 
@@ -121,25 +121,25 @@ class AllBadgeClassesList(UncachedPaginatedViewMixin, BaseEntityListView):
             return request.user.cached_badgeclasses()
         return BadgeClass.objects.filter(issuer__staff=request.user).order_by('created_at')
 
-    @apispec_list_operation('BadgeClass',
-        summary="Get a list of BadgeClasses for authenticated user",
-        tags=["BadgeClasses"],
-    )
+    # @apispec_list_operation('BadgeClass',
+    #     summary="Get a list of BadgeClasses for authenticated user",
+    #     tags=["BadgeClasses"],
+    # )
     def get(self, request, **kwargs):
         return super(AllBadgeClassesList, self).get(request, **kwargs)
 
-    @apispec_post_operation('BadgeClass',
-        summary="Create a new BadgeClass",
-        tags=["BadgeClasses"],
-        parameters=[
-            {
-                'in': 'query',
-                'name': "num",
-                'type': "string",
-                'description': 'Request pagination of results'
-            },
-        ]
-    )
+    # @apispec_post_operation('BadgeClass',
+    #     summary="Create a new BadgeClass",
+    #     tags=["BadgeClasses"],
+    #     parameters=[
+    #         {
+    #             'in': 'query',
+    #             'name': "num",
+    #             'type': "string",
+    #             'description': 'Request pagination of results'
+    #         },
+    #     ]
+    # )
     def post(self, request, **kwargs):
         return super(AllBadgeClassesList, self).post(request, **kwargs)
 
@@ -172,27 +172,27 @@ class IssuerBadgeClassList(UncachedPaginatedViewMixin, VersionedObjectMixin, Bas
         context['issuer'] = self.get_object(self.request, **kwargs)
         return context
 
-    @apispec_list_operation('BadgeClass',
-        summary="Get a list of BadgeClasses for a single Issuer",
-        description="Authenticated user must have owner, editor, or staff status on the Issuer",
-        tags=["Issuers", "BadgeClasses"],
-        parameters=[
-            {
-                'in': 'query',
-                'name': "num",
-                'type': "string",
-                'description': 'Request pagination of results'
-            },
-        ]
-    )
+    # @apispec_list_operation('BadgeClass',
+    #     summary="Get a list of BadgeClasses for a single Issuer",
+    #     description="Authenticated user must have owner, editor, or staff status on the Issuer",
+    #     tags=["Issuers", "BadgeClasses"],
+    #     parameters=[
+    #         {
+    #             'in': 'query',
+    #             'name': "num",
+    #             'type': "string",
+    #             'description': 'Request pagination of results'
+    #         },
+    #     ]
+    # )
     def get(self, request, **kwargs):
         return super(IssuerBadgeClassList, self).get(request, **kwargs)
 
-    @apispec_post_operation('BadgeClass',
-        summary="Create a new BadgeClass associated with an Issuer",
-        description="Authenticated user must have owner, editor, or staff status on the Issuer",
-        tags=["Issuers", "BadgeClasses"],
-    )
+    # @apispec_post_operation('BadgeClass',
+    #     summary="Create a new BadgeClass associated with an Issuer",
+    #     description="Authenticated user must have owner, editor, or staff status on the Issuer",
+    #     tags=["Issuers", "BadgeClasses"],
+    # )
     def post(self, request, **kwargs):
         issuer = self.get_object(request, **kwargs)  # trigger a has_object_permissions() check
         return super(IssuerBadgeClassList, self).post(request, **kwargs)
@@ -214,24 +214,24 @@ class BadgeClassDetail(BaseEntityDetailView):
 
     valid_scopes = ["rw:issuer", "rw:issuer:*"]
 
-    @apispec_get_operation('BadgeClass',
-        summary='Get a single BadgeClass',
-        tags=['BadgeClasses'],
-    )
+    # @apispec_get_operation('BadgeClass',
+    #     summary='Get a single BadgeClass',
+    #     tags=['BadgeClasses'],
+    # )
     def get(self, request, **kwargs):
         return super(BadgeClassDetail, self).get(request, **kwargs)
 
-    @apispec_delete_operation('BadgeClass',
-        summary="Delete a BadgeClass",
-        description="Restricted to owners or editors (not staff) of the corresponding Issuer.",
-        tags=['BadgeClasses'],
-        responses=OrderedDict([
-            ("400", {
-                'description': "BadgeClass couldn't be deleted. It may have already been issued."
-            }),
+    # @apispec_delete_operation('BadgeClass',
+    #     summary="Delete a BadgeClass",
+    #     description="Restricted to owners or editors (not staff) of the corresponding Issuer.",
+    #     tags=['BadgeClasses'],
+    #     responses=OrderedDict([
+    #         ("400", {
+    #             'description': "BadgeClass couldn't be deleted. It may have already been issued."
+    #         }),
 
-        ])
-    )
+    #     ])
+    # )
     def delete(self, request, **kwargs):
         base_entity = super(BadgeClassDetail, self)
         badge_class = base_entity.get_object(request, **kwargs)
@@ -240,10 +240,10 @@ class BadgeClassDetail(BaseEntityDetailView):
 
         return base_entity.delete(request, **kwargs)
 
-    @apispec_put_operation('BadgeClass',
-        summary='Update an existing BadgeClass.  Previously issued BadgeInstances will NOT be updated',
-        tags=['BadgeClasses'],
-    )
+    # @apispec_put_operation('BadgeClass',
+    #     summary='Update an existing BadgeClass.  Previously issued BadgeInstances will NOT be updated',
+    #     tags=['BadgeClasses'],
+    # )
     def put(self, request, **kwargs):
         return super(BadgeClassDetail, self).put(request, **kwargs)
 
@@ -264,21 +264,21 @@ class BatchAssertionsIssue(VersionedObjectMixin, BaseEntityView):
         context['badgeclass'] = self.get_object(self.request, **kwargs)
         return context
 
-    @apispec_post_operation('Assertion',
-        summary='Issue multiple copies of the same BadgeClass to multiple recipients',
-        tags=['Assertions'],
-        parameters=[
-            {
-                "in": "body",
-                "name": "body",
-                "required": True,
-                'schema': {
-                    "type": "array",
-                    'items': { '$ref': '#/definitions/Assertion' }
-                },
-            }
-        ]
-    )
+    # @apispec_post_operation('Assertion',
+    #     summary='Issue multiple copies of the same BadgeClass to multiple recipients',
+    #     tags=['Assertions'],
+    #     parameters=[
+    #         {
+    #             "in": "body",
+    #             "name": "body",
+    #             "required": True,
+    #             'schema': {
+    #                 "type": "array",
+    #                 'items': { '$ref': '#/definitions/Assertion' }
+    #             },
+    #         }
+    #     ]
+    # )
     def post(self, request, **kwargs):
         # verify the user has permission to the badgeclass
         badgeclass = self.get_object(request, **kwargs)
@@ -359,21 +359,21 @@ class BatchAssertionsRevoke(VersionedObjectMixin, BaseEntityView):
 
         return dict(response, revoked=True)
 
-    @apispec_post_operation('Assertion',
-        summary='Revoke multiple Assertions',
-        tags=['Assertions'],
-        parameters=[
-            {
-                "in": "body",
-                "name": "body",
-                "required": True,
-                'schema': {
-                    "type": "array",
-                    'items': { '$ref': '#/definitions/Assertion' }
-                },
-            }
-        ]
-    )
+    # @apispec_post_operation('Assertion',
+    #     summary='Revoke multiple Assertions',
+    #     tags=['Assertions'],
+    #     parameters=[
+    #         {
+    #             "in": "body",
+    #             "name": "body",
+    #             "required": True,
+    #             'schema': {
+    #                 "type": "array",
+    #                 'items': { '$ref': '#/definitions/Assertion' }
+    #             },
+    #         }
+    #     ]
+    # )
     def post(self, request, **kwargs):
         result = [
             self._process_revoke(request, revocation)
@@ -420,45 +420,45 @@ class BadgeInstanceList(UncachedPaginatedViewMixin, VersionedObjectMixin, BaseEn
         context['badgeclass'] = self.get_object(self.request, **kwargs)
         return context
 
-    @apispec_list_operation('Assertion',
-        summary="Get a list of Assertions for a single BadgeClass",
-        tags=['Assertions', 'BadgeClasses'],
-        parameters=[
-            {
-                'in': 'query',
-                'name': "recipient",
-                'type': "string",
-                'description': 'A recipient identifier to filter by'
-            },
-            {
-                'in': 'query',
-                'name': "num",
-                'type': "string",
-                'description': 'Request pagination of results'
-            },
-            {
-                'in': 'query',
-                'name': "include_expired",
-                'type': "boolean",
-                'description': 'Include expired assertions'
-            },
-            {
-                'in': 'query',
-                'name': "include_revoked",
-                'type': "boolean",
-                'description': 'Include revoked assertions'
-            }
-        ]
-    )
+    # @apispec_list_operation('Assertion',
+    #     summary="Get a list of Assertions for a single BadgeClass",
+    #     tags=['Assertions', 'BadgeClasses'],
+    #     parameters=[
+    #         {
+    #             'in': 'query',
+    #             'name': "recipient",
+    #             'type': "string",
+    #             'description': 'A recipient identifier to filter by'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "num",
+    #             'type': "string",
+    #             'description': 'Request pagination of results'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "include_expired",
+    #             'type': "boolean",
+    #             'description': 'Include expired assertions'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "include_revoked",
+    #             'type': "boolean",
+    #             'description': 'Include revoked assertions'
+    #         }
+    #     ]
+    # )
     def get(self, request, **kwargs):
         # verify the user has permission to the badgeclass
         badgeclass = self.get_object(request, **kwargs)
         return super(BadgeInstanceList, self).get(request, **kwargs)
 
-    @apispec_post_operation('Assertion',
-        summary="Issue an Assertion to a single recipient",
-        tags=['Assertions', 'BadgeClasses'],
-    )
+    # @apispec_post_operation('Assertion',
+    #     summary="Issue an Assertion to a single recipient",
+    #     tags=['Assertions', 'BadgeClasses'],
+    # )
     def post(self, request, **kwargs):
         # verify the user has permission to the badgeclass
         badgeclass = self.get_object(request, **kwargs)
@@ -493,43 +493,43 @@ class IssuerBadgeInstanceList(UncachedPaginatedViewMixin, VersionedObjectMixin, 
             queryset = queryset.filter(revoked=False)
         return queryset
 
-    @apispec_list_operation('Assertion',
-        summary='Get a list of Assertions for a single Issuer',
-        tags=['Assertions', 'Issuers'],
-        parameters=[
-            {
-                'in': 'query',
-                'name': "recipient",
-                'type': "string",
-                'description': 'A recipient identifier to filter by'
-            },
-            {
-                'in': 'query',
-                'name': "num",
-                'type': "string",
-                'description': 'Request pagination of results'
-            },
-            {
-                'in': 'query',
-                'name': "include_expired",
-                'type': "boolean",
-                'description': 'Include expired assertions'
-            },
-            {
-                'in': 'query',
-                'name': "include_revoked",
-                'type': "boolean",
-                'description': 'Include revoked assertions'
-            },
-        ]
-    )
+    # @apispec_list_operation('Assertion',
+    #     summary='Get a list of Assertions for a single Issuer',
+    #     tags=['Assertions', 'Issuers'],
+    #     parameters=[
+    #         {
+    #             'in': 'query',
+    #             'name': "recipient",
+    #             'type': "string",
+    #             'description': 'A recipient identifier to filter by'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "num",
+    #             'type': "string",
+    #             'description': 'Request pagination of results'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "include_expired",
+    #             'type': "boolean",
+    #             'description': 'Include expired assertions'
+    #         },
+    #         {
+    #             'in': 'query',
+    #             'name': "include_revoked",
+    #             'type': "boolean",
+    #             'description': 'Include revoked assertions'
+    #         },
+    #     ]
+    # )
     def get(self, request, **kwargs):
         return super(IssuerBadgeInstanceList, self).get(request, **kwargs)
 
-    @apispec_post_operation('Assertion',
-        summary="Issue a new Assertion to a recipient",
-        tags=['Assertions', 'Issuers']
-    )
+    # @apispec_post_operation('Assertion',
+    #     summary="Issue a new Assertion to a recipient",
+    #     tags=['Assertions', 'Issuers']
+    # )
     def post(self, request, **kwargs):
         kwargs['issuer'] = self.get_object(request, **kwargs)  # trigger a has_object_permissions() check
         return super(IssuerBadgeInstanceList, self).post(request, **kwargs)
@@ -549,38 +549,38 @@ class BadgeInstanceDetail(BaseEntityDetailView):
     v2_serializer_class = BadgeInstanceSerializerV2
     valid_scopes = ["rw:issuer", "rw:issuer:*"]
 
-    @apispec_get_operation('Assertion',
-        summary="Get a single Assertion",
-        tags=['Assertions']
-    )
+    # @apispec_get_operation('Assertion',
+    #     summary="Get a single Assertion",
+    #     tags=['Assertions']
+    # )
     def get(self, request, **kwargs):
         return super(BadgeInstanceDetail, self).get(request, **kwargs)
 
-    @apispec_delete_operation('Assertion',
-        summary="Revoke an Assertion",
-        tags=['Assertions'],
-        responses=OrderedDict([
-            ('400', {
-                'description': "Assertion is already revoked"
-            })
-        ]),
-        parameters=[{
-            "in": "body",
-            "name": "body",
-            "required": True,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "revocation_reason": {
-                        "type": "string",
-                        "format": "string",
-                        'description': "The reason for revoking this assertion",
-                        'required': False
-                    },
-                }
-            }
-        }]
-    )
+    # @apispec_delete_operation('Assertion',
+    #     summary="Revoke an Assertion",
+    #     tags=['Assertions'],
+    #     responses=OrderedDict([
+    #         ('400', {
+    #             'description': "Assertion is already revoked"
+    #         })
+    #     ]),
+    #     parameters=[{
+    #         "in": "body",
+    #         "name": "body",
+    #         "required": True,
+    #         "schema": {
+    #             "type": "object",
+    #             "properties": {
+    #                 "revocation_reason": {
+    #                     "type": "string",
+    #                     "format": "string",
+    #                     'description': "The reason for revoking this assertion",
+    #                     'required': False
+    #                 },
+    #             }
+    #         }
+    #     }]
+    # )
     def delete(self, request, **kwargs):
         # verify the user has permission to the assertion
         assertion = self.get_object(request, **kwargs)
@@ -601,10 +601,10 @@ class BadgeInstanceDetail(BaseEntityDetailView):
         logger.event(badgrlog.BadgeAssertionRevokedEvent(assertion, request.user))
         return Response(status=HTTP_200_OK, data=serializer.data)
 
-    @apispec_put_operation('Assertion',
-        summary="Update an Assertion",
-        tags=['Assertions'],
-    )
+    # @apispec_put_operation('Assertion',
+    #     summary="Update an Assertion",
+    #     tags=['Assertions'],
+    # )
     def put(self, request, **kwargs):
         return super(BadgeInstanceDetail, self).put(request, **kwargs)
 
@@ -615,10 +615,10 @@ class IssuerTokensList(BaseEntityListView):
     v2_serializer_class = IssuerAccessTokenSerializerV2
     valid_scopes = ["rw:issuer"]
 
-    @apispec_post_operation('AccessToken',
-        summary="Retrieve issuer tokens",
-        tags=["Issuers"],
-    )
+    # @apispec_post_operation('AccessToken',
+    #     summary="Retrieve issuer tokens",
+    #     tags=["Issuers"],
+    # )
     def post(self, request, **kwargs):
         issuer_entityids = request.data.get('issuers', None)
         if not issuer_entityids:

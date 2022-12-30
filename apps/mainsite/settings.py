@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'externaltools',
 
     # api docs
-    'apispec_drf',
+    # 'apispec_drf',
 
     # deprecated
     'composition',

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 
-from apispec_drf.decorators import apispec_list_operation, apispec_operation
+# from apispec_drf.decorators import apispec_list_operation, apispec_operation
 from django.contrib.auth import get_user_model
 from rest_framework import status, authentication
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
@@ -82,10 +82,10 @@ class IssuerStaffList(VersionedObjectMixin, APIView):
         "@apispec_scopes": {}
     }
 
-    @apispec_list_operation('IssuerStaff',
-        tags=['Issuers'],
-        summary="Get a list of users associated with a role on an Issuer"
-    )
+    # @apispec_list_operation('IssuerStaff',
+    #     tags=['Issuers'],
+    #     summary="Get a list of users associated with a role on an Issuer"
+    # )
     def get(self, request, **kwargs):
         current_issuer = self.get_object(request, **kwargs)
         if not self.has_object_permissions(request, current_issuer):
@@ -105,10 +105,10 @@ class IssuerStaffList(VersionedObjectMixin, APIView):
             return Response([], status=status.HTTP_200_OK)
         return Response(serializer.data)
 
-    @apispec_operation(
-        tags=['Issuers'],
-        summary="Add or remove a user from a role on an issuer. Limited to Owner users only"
-    )
+    # @apispec_operation(
+    #     tags=['Issuers'],
+    #     summary="Add or remove a user from a role on an issuer. Limited to Owner users only"
+    # )
     @throttleable
     def post(self, request, **kwargs):
         """
@@ -235,18 +235,18 @@ class FindBadgeClassDetail(APIView):
     """
     permission_classes = (AuthenticatedWithVerifiedIdentifier,)
 
-    @apispec_operation(
-        summary="Get a specific BadgeClass by searching by identifier",
-        tags=['BadgeClasses'],
-        parameters=[
-            {
-                "in": "query",
-                "name": "identifier",
-                'required': True,
-                "description": "The identifier of the badge possible values: JSONld identifier, BadgeClass.id, or BadgeClass.slug"
-            }
-        ]
-    )
+    # @apispec_operation(
+    #     summary="Get a specific BadgeClass by searching by identifier",
+    #     tags=['BadgeClasses'],
+    #     parameters=[
+    #         {
+    #             "in": "query",
+    #             "name": "identifier",
+    #             'required': True,
+    #             "description": "The identifier of the badge possible values: JSONld identifier, BadgeClass.id, or BadgeClass.slug"
+    #         }
+    #     ]
+    # )
     def get(self, request, **kwargs):
         identifier = request.query_params.get('identifier')
         badge = get_badgeclass_by_identifier(identifier)

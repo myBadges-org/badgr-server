@@ -3,8 +3,8 @@
 
 import datetime
 
-from apispec_drf.decorators import apispec_list_operation, apispec_operation, \
-    apispec_get_operation, apispec_delete_operation, apispec_put_operation
+# from apispec_drf.decorators import apispec_list_operation, apispec_operation, \
+#     apispec_get_operation, apispec_delete_operation, apispec_put_operation
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,28 +18,28 @@ RATE_LIMIT_DELTA = datetime.timedelta(minutes=5)
 class BadgeUserEmailList(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    @apispec_list_operation('BadgeUserEmail',
-        summary="Get a list of user's registered emails",
-        tags=['BadgeUsers']
-    )
+    # @apispec_list_operation('BadgeUserEmail',
+    #     summary="Get a list of user's registered emails",
+    #     tags=['BadgeUsers']
+    # )
     def get(self, request, **kwargs):
         instances = request.user.cached_emails()
         serializer = EmailSerializerV1(instances, many=True, context={'request': request})
         return Response(serializer.data)
 
-    @apispec_operation(
-        summary="Register a new unverified email",
-        tags=['BadgeUsers'],
-        properties=[
-            {
-                'in': 'formData',
-                'name': "email",
-                'type': "string",
-                'format': "email",
-                'description': 'The email to register'
-            }
-        ]
-    )
+    # @apispec_operation(
+    #     summary="Register a new unverified email",
+    #     tags=['BadgeUsers'],
+    #     properties=[
+    #         {
+    #             'in': 'formData',
+    #             'name': "email",
+    #             'type': "string",
+    #             'format': "email",
+    #             'description': 'The email to register'
+    #         }
+    #     ]
+    # )
     @throttleable
     def post(self, request, **kwargs):
         serializer = EmailSerializerV1(data=request.data, context={'request': request})
@@ -65,10 +65,10 @@ class BadgeUserEmailView(APIView):
 class BadgeUserEmailDetail(BadgeUserEmailView):
     model = CachedEmailAddress
 
-    @apispec_get_operation('BadgeUserEmail',
-        summary="Get detail for one registered email",
-        tags=['BadgeUsers']
-    )
+    # @apispec_get_operation('BadgeUserEmail',
+    #     summary="Get detail for one registered email",
+    #     tags=['BadgeUsers']
+    # )
     def get(self, request, id, **kwargs):
         email_address = self.get_email(pk=id)
         if email_address is None or email_address.user_id != self.request.user.id:
@@ -77,10 +77,10 @@ class BadgeUserEmailDetail(BadgeUserEmailView):
         serializer = EmailSerializerV1(email_address, context={'request': request})
         return Response(serializer.data)
 
-    @apispec_delete_operation('BadgeUserEmail',
-        summary="Remove a registered email for the current user",
-        tags=['BadgeUsers']
-    )
+    # @apispec_delete_operation('BadgeUserEmail',
+    #     summary="Remove a registered email for the current user",
+    #     tags=['BadgeUsers']
+    # )
     def delete(self, request, id, **kwargs):
         email_address = self.get_email(pk=id)
         if email_address is None:
@@ -97,10 +97,10 @@ class BadgeUserEmailDetail(BadgeUserEmailView):
         email_address.delete()
         return Response(status.HTTP_200_OK)
 
-    @apispec_put_operation('BadgeUserEmail',
-        summary='Update a registered email for the current user',
-        tags=['BadgeUsers']
-    )
+    # @apispec_put_operation('BadgeUserEmail',
+    #     summary='Update a registered email for the current user',
+    #     tags=['BadgeUsers']
+    # )
     def put(self, request, id, **kwargs):
         email_address = self.get_email(pk=id)
         if email_address is None:

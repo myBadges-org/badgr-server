@@ -7,8 +7,8 @@ import urllib.parse
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailConfirmationHMAC
 from allauth.account.utils import user_pk_to_url_str, url_str_to_user_pk
-from apispec_drf.decorators import (apispec_get_operation, apispec_put_operation, apispec_post_operation, apispec_operation,
-                                    apispec_delete_operation, apispec_list_operation,)
+# from apispec_drf.decorators import (apispec_get_operation, apispec_put_operation, apispec_post_operation, apispec_operation,
+#                                     apispec_delete_operation, apispec_list_operation,)
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
@@ -58,11 +58,11 @@ class BadgeUserDetail(BaseEntityDetailView):
         "put": ["rw:profile"],
     }
 
-    @apispec_post_operation('BadgeUser',
-                            summary="Post a single BadgeUser profile",
-                            description="Make an account",
-                            tags=['BadgeUsers']
-                            )
+    # @apispec_post_operation('BadgeUser',
+    #                         summary="Post a single BadgeUser profile",
+    #                         description="Make an account",
+    #                         tags=['BadgeUsers']
+    #                         )
     @throttleable
     def post(self, request, **kwargs):
         """
@@ -82,19 +82,19 @@ class BadgeUserDetail(BaseEntityDetailView):
 
         return Response(status=HTTP_404_NOT_FOUND)
 
-    @apispec_get_operation('BadgeUser',
-                           summary="Get a single BadgeUser profile",
-                           description="Use the entityId 'self' to retrieve the authenticated user's profile",
-                           tags=['BadgeUsers']
-                           )
+    # @apispec_get_operation('BadgeUser',
+    #                        summary="Get a single BadgeUser profile",
+    #                        description="Use the entityId 'self' to retrieve the authenticated user's profile",
+    #                        tags=['BadgeUsers']
+    #                        )
     def get(self, request, **kwargs):
         return super(BadgeUserDetail, self).get(request, **kwargs)
 
-    @apispec_put_operation('BadgeUser',
-                           summary="Update a BadgeUser",
-                           description="Use the entityId 'self' to update the authenticated user's profile",
-                           tags=['BadgeUsers']
-                           )
+    # @apispec_put_operation('BadgeUser',
+    #                        summary="Update a BadgeUser",
+    #                        description="Use the entityId 'self' to update the authenticated user's profile",
+    #                        tags=['BadgeUsers']
+    #                        )
     def put(self, request, **kwargs):
         return super(BadgeUserDetail, self).put(request, allow_partial=True, **kwargs)
 
@@ -215,27 +215,27 @@ class BadgeUserForgotPassword(BaseUserRecoveryView):
         tokenized_url = "{}{}".format(redirect_url, token)
         return Response(status=HTTP_302_FOUND, headers={'Location': tokenized_url})
 
-    @apispec_operation(
-        summary="Request an account recovery email",
-        tags=["Authentication"],
-        parameters=[
-            {
-                "in": "body",
-                "name": "body",
-                "required": True,
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "email": {
-                            "type": "string",
-                            "format": "email",
-                            "description": "The email address on file to send recovery email to"
-                        }
-                    }
-                },
-            }
-        ]
-    )
+    # @apispec_operation(
+    #     summary="Request an account recovery email",
+    #     tags=["Authentication"],
+    #     parameters=[
+    #         {
+    #             "in": "body",
+    #             "name": "body",
+    #             "required": True,
+    #             "schema": {
+    #                 "type": "object",
+    #                 "properties": {
+    #                     "email": {
+    #                         "type": "string",
+    #                         "format": "email",
+    #                         "description": "The email address on file to send recovery email to"
+    #                     }
+    #                 }
+    #             },
+    #         }
+    #     ]
+    # )
     def post(self, request, **kwargs):
         email = request.data.get('email')
         try:
@@ -298,33 +298,33 @@ class BadgeUserForgotPassword(BaseUserRecoveryView):
 
         return self.get_response()
 
-    @apispec_operation(
-        summary="Recover an account and set a new password",
-        tags=["Authentication"],
-        parameters=[
-            {
-                "in": "body",
-                "name": "body",
-                "required": True,
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "token": {
-                            "type": "string",
-                            "format": "string",
-                            "description": "The token recieved in the recovery email",
-                            'required': True
-                        },
-                        "password": {
-                            'type': "string",
-                            'description': "The new password to use",
-                            'required': True
-                        }
-                    }
-                },
-            }
-        ]
-    )
+    # @apispec_operation(
+    #     summary="Recover an account and set a new password",
+    #     tags=["Authentication"],
+    #     parameters=[
+    #         {
+    #             "in": "body",
+    #             "name": "body",
+    #             "required": True,
+    #             "schema": {
+    #                 "type": "object",
+    #                 "properties": {
+    #                     "token": {
+    #                         "type": "string",
+    #                         "format": "string",
+    #                         "description": "The token recieved in the recovery email",
+    #                         'required': True
+    #                     },
+    #                     "password": {
+    #                         'type': "string",
+    #                         'description': "The new password to use",
+    #                         'required': True
+    #                     }
+    #                 }
+    #             },
+    #         }
+    #     ]
+    # )
     def put(self, request, **kwargs):
         token = request.data.get('token')
         password = request.data.get('password')
@@ -527,10 +527,10 @@ class AccessTokenList(BaseEntityListView):
     def get_objects(self, request, **kwargs):
         return AccessTokenProxy.objects.filter(user=request.user, expires__gt=timezone.now())
 
-    @apispec_list_operation('AccessToken',
-                            summary='Get a list of access tokens for authenticated user',
-                            tags=['Authentication']
-                            )
+    # @apispec_list_operation('AccessToken',
+    #                         summary='Get a list of access tokens for authenticated user',
+    #                         tags=['Authentication']
+    #                         )
     def get(self, request, **kwargs):
         return super(AccessTokenList, self).get(request, **kwargs)
 
@@ -551,17 +551,17 @@ class AccessTokenDetail(BaseEntityDetailView):
             raise Http404
         return self.object
 
-    @apispec_get_operation('AccessToken',
-                           summary='Get a single AccessToken',
-                           tags=['Authentication']
-                           )
+    # @apispec_get_operation('AccessToken',
+    #                        summary='Get a single AccessToken',
+    #                        tags=['Authentication']
+    #                        )
     def get(self, request, **kwargs):
         return super(AccessTokenDetail, self).get(request, **kwargs)
 
-    @apispec_delete_operation('AccessToken',
-                              summary='Revoke an AccessToken',
-                              tags=['Authentication']
-                              )
+    # @apispec_delete_operation('AccessToken',
+    #                           summary='Revoke an AccessToken',
+    #                           tags=['Authentication']
+    #                           )
     def delete(self, request, **kwargs):
         obj = self.get_object(request, **kwargs)
         if not self.has_object_permissions(request, obj):
