@@ -87,20 +87,20 @@ To run the project with docker in a development mode:
 
 ### Running the Django Server in "Production"
 
-By default `docker compose` will look for a `docker compose.yml` for instructions of what to do. This file
+By default `docker compose` will look for a `docker-compose.yml` for instructions of what to do. This file
 is the development (and thus default) config for `docker compose`.
 
 If you'd like to run the project with a more production-like setup, you can specify the `docker-compose.prod.yml`
 file. This setup **copies** the project code in (instead of mirroring) and uses nginx with uwsgi to run django.
 
-- `docker compose -f docker compose.prod.yml up -d` - build and get django and other components (production mode)
+- `docker compose -f docker-compose.prod.yml up -d` - build and get django and other components (production mode)
 
-- `docker compose -f docker compose.prod.yml exec api python /badgr_server/manage.py migrate` - (while running) set up database tables
+- `docker compose -f docker-compose.prod.yml exec api python /badgr_server/manage.py migrate` - (while running) set up database tables
 
 If you are using the production setup and you have made changes you wish to see reflected in the running container,
 you will need to stop and then rebuild the production containers:
 
-- `docker compose -f docker compose.prod.yml build` - (re)build the production containers
+- `docker compose -f docker-compose.prod.yml build` - (re)build the production containers
 
 ### Accessing the Django Server Running in Docker
 
