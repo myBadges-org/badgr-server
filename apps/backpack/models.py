@@ -2,6 +2,7 @@
 
 import os
 import binascii
+import random
 from collections import OrderedDict
 
 import cachemodel
@@ -76,7 +77,8 @@ class BackpackCollection(BaseAuditedModelDeletedWithUser, BaseVersionedEntity):
     @published.setter
     def published(self, value):
         if value and not self.share_hash:
-            self.share_hash = str(binascii.hexlify(os.urandom(16)), 'utf-8')
+            random.seed(a=self.entity_id)
+            self.share_hash = str(binascii.hexlify(random.randbytes(16)), 'utf-8')
         elif not value and self.share_hash:
             self.publish_delete('share_hash')
             self.share_hash = ''
